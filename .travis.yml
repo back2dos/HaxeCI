@@ -1,24 +1,41 @@
 language: haxe
 
-haxe:
-  - "3.1.3"
-  - development
-
 matrix:
+  include:
+    - haxe: "3.1.3"
+      addons:
+        apt:
+          packages:
+            - php-zeroc-ice # use it to install php5 for now
+      install:
+        # Note that when the haxelib cache exists, haxelib will ask if we want to set versions
+        # Use `yes |` to answer that.
+        - yes | haxelib install hxcpp
+        - yes | haxelib install hxjava
+        - yes | haxelib install hxcs
+        - haxelib list
+
+    - haxe: "development"
+      addons:
+        apt:
+          packages:
+            - php-zeroc-ice # use it to install php5 for now
+            - python3
+      install:
+        # install and rebuild hxcpp
+        - haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp.git
+        - cd $(haxelib path hxcpp | head -1)tools/hxcpp && haxe compile.hxml
+        - cd $(haxelib path hxcpp | head -1)project && neko build.n linux-m64
+        - cd $TRAVIS_BUILD_DIR
+
+        # install hxjava and hxcs
+        - haxelib git hxjava https://github.com/HaxeFoundation/hxjava.git
+        - haxelib git hxcs https://github.com/HaxeFoundation/hxcs.git
+
+        - haxelib list
+
   allow_failures:
     - haxe: development
-
-addons:
-  apt:
-    packages:
-      - python3
-      - php-zeroc-ice # use it to install php5 for now
-
-install:
-  - haxelib install hxcpp
-  - haxelib install hxjava
-  - haxelib install hxcs
-  - haxelib list
 
 script:
   - haxe build-interp.hxml
