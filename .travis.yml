@@ -1,20 +1,10 @@
-language: haxe
+language: generic
 
 # TravisCI by default run on linux.
 # Let's enable both linux and mac builds because why not?
 os:
   - linux
   - osx
-
-# Test with Haxe 3.2.0 and Haxe development.
-haxe:
-  - "3.2.0"
-  - development
-
-matrix:
-  # Allow Haxe development to fail.
-  allow_failures:
-    - haxe: development
 
 addons:
   # This is the preferred way to install apt packages.
@@ -40,15 +30,24 @@ install:
   - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
       export DISPLAY=:99.0;
       export AUDIODEV=null;
+      sudo add-apt-repository ppa:haxe/releases -y;
+      sudo apt-get update;
+      sudo apt-get install haxe -y;
     elif [ "${TRAVIS_OS_NAME}" = "osx" ]; then
       brew update;
       brew install mono;
       brew install phantomjs;
       brew install python3;
+      brew install haxe;
     fi
+  # Check the installed versions
+  - neko -version
+  - haxe -version
   # Download and setup a standalone flash player debugger
   - haxe flash/install.hxml
   # Install haxelibs
+  - mkdir ~/haxelib
+  - haxelib setup ~/haxelib
   - haxelib install hxcpp
   - haxelib install hxjava
   - haxelib install hxcs
