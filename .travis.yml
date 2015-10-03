@@ -38,7 +38,7 @@ install:
       brew install mono;
       brew install phantomjs;
       brew install python3;
-      brew install haxe;
+      brew install neko haxe;
     fi
   # Check the installed versions
   - neko -version
