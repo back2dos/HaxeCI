@@ -38,21 +38,24 @@ addons:
       # C#
       - mono-devel
       - mono-mcs
-      # Flash
-      - libcurl3:i386
-      - libglib2.0-0:i386
-      - libx11-6:i386
-      - libxext6:i386
-      - libxt6:i386
-      - libxcursor1:i386
-      - libnss3:i386
-      - libgtk2.0-0:i386
 
 install:
   # os-specific config
   - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
       export DISPLAY=:99.0;
       export AUDIODEV=null;
+      sudo dpkg --add-architecture i386;
+      sudo apt-get update -y || true;
+      sudo apt-get install -y
+        libcurl3:i386
+        libglib2.0-0:i386
+        libx11-6:i386
+        libxext6:i386
+        libxt6:i386
+        libxcursor1:i386
+        libnss3:i386
+        libgtk2.0-0:i386
+        ;
     elif [ "${TRAVIS_OS_NAME}" = "osx" ]; then
       brew update;
       brew install mono;
