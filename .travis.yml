@@ -11,6 +11,8 @@ haxe:
   - "3.2.1"
   - development
 
+neko: "2.1.0"
+
 matrix:
   # Allow Haxe development to fail.
   allow_failures:
