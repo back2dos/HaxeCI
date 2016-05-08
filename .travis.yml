@@ -6,6 +6,9 @@ os:
   - linux
   - osx
 
+sudo: required
+dist: trusty
+
 # Test with Haxe 3.2.1 and Haxe development.
 haxe:
   - "3.2.1"
