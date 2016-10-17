@@ -3,6 +3,9 @@ version: "{build}"
 environment:
   global:
     HAXELIB_ROOT: C:\projects\haxelib
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 install:
   # Install the haxe chocolatey package (https://chocolatey.org/packages/haxe)
