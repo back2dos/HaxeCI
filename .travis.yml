@@ -8,7 +8,7 @@ os:
 
 # Let's use OSX 10.10, which is the oldest version that homebrew provides bottles for.
 # https://docs.travis-ci.com/user/osx-ci-environment/
-osx_image: xcode6.4
+osx_image: xcode7.3
 
 # Test with Haxe 3.2.1 and Haxe development.
 haxe:
