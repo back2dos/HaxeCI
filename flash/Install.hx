@@ -8,7 +8,7 @@ class Install {
 	// https://www.adobe.com/support/flashplayer/downloads.html
 	static var fpDownload(default, never) = switch (systemName()) {
 		case "Linux":
-			"http://fpdownload.macromedia.com/pub/flashplayer/updaters/26/flash_player_sa_linux_debug.x86_64.tar.gz";
+			"http://fpdownload.macromedia.com/pub/labs/flashruntimes/flashplayer/linux64/flash_player_sa_linux_debug.x86_64.tar.gz";
 		case "Mac":
 			"http://fpdownload.macromedia.com/pub/flashplayer/updaters/26/flashplayer_26_sa_debug.dmg";
 		case "Windows":
