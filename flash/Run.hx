@@ -16,21 +16,28 @@ class Run {
 			throw "unsupported system";
 	}
 	static function main() {
-		var args = args();
-		var swf = args[0];
+		var args = switch (args()) {
+			case ["--version"]:
+				["--version"];
+			case [swf]:
+				[fullPath(swf)];
+			case _:
+				throw "Expect only 1 argument.";
+		}
 		var exitCode = switch (systemName()) {
 			case "Linux":
-				command("xvfb-run", ["-a", "flash/flashplayerdebugger", swf]);
+				command("xvfb-run", ["-a", "flash/flashplayerdebugger"].concat(args));
 			case "Mac":
-				command("/Applications/Flash Player Debugger.app/Contents/MacOS/Flash Player Debugger", [fullPath(swf)]);
+				command("/Applications/Flash Player Debugger.app/Contents/MacOS/Flash Player Debugger", args);
 			case "Windows":
-				command("flash\\flashplayer.exe", [fullPath(swf)]);
+				command("flash\\flashplayer.exe", args);
 			case _:
 				throw "unsupported platform";
 		}
 		if (exists(flashlog))
 			println(getContent(flashlog));
 		else {
+			#if debug
 			println('does not exist: $flashlog');
 			var parts = Path.normalize(flashlog).split("/");
 			println(parts);
@@ -39,6 +46,7 @@ class Run {
 				println('ls $path');
 				command("ls", [path]);
 			}
+			#end
 		}
 		exit(exitCode);
 	}

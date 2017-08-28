@@ -75,6 +75,7 @@ install:
   - sudo luarocks install environ
   # Download and setup a standalone flash player debugger
   - haxe flash/install.hxml
+  - haxe flash/run.hxml --version
   # Install haxelibs
   - if [ "${TRAVIS_HAXE_VERSION}" = "development" ]; then
       haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp.git;
